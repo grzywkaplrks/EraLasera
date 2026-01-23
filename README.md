@@ -1,6 +1,6 @@
 🌏 www.eralasera.pl 
 
-Era Lasera łączy innowacyjną technologię czyszczenia laserowego z kompleksową renowacją obiektów sakralnych skupiając się głównie na przywracaniu świetności zabytkowym żyrandolom oraz kinkietom. Dzięki wykorzystaniu precyzyjnej wiązki światła firma bezinwazyjnie usuwa patynę i zabrudzenia co umożliwia profesjonalne złocenie monstrancji, srebrzenie krzyży oraz polerowanie tabernakulów na wysoki połysk. Proces ten obejmuje także pełną modernizację instalacji elektrycznej w oświetleniu oraz uzupełnianie brakujących detali co pozwala zachować najcenniejsze elementy przedmiotów w doskonałym stanie dla kolejnych pokoleń.
+Era Lasera świadczy kompleksowe usługi renowacji całego przekroju wyposażenia sakralnego przy wykorzystaniu innowacyjnej technologii czyszczenia laserowego. Ich warsztat obejmuje profesjonalne odnawianie żyrandoli oraz kinkietów połączone z wymianą instalacji elektrycznej a także kunsztowną konserwację krzyży, monstrancji i tabernakulów. Precyzyjna wiązka światła pozwala na bezpieczne usuwanie zanieczyszczeń z chrzcielnic i dzwonków co stanowi idealny fundament pod dalsze prace takie jak złocenie, srebrzenie czy polerowanie powierzchni na wysoki połysk. Firma dba o każdy detal poprzez uzupełnianie brakujących elementów i stosowanie trwałych powłok ochronnych co sprawia że wszystkie elementy wystroju świątyni odzyskują swój pierwotny blask i godność.
 
 🗺️ Kopiec 11, 97-500 Radomsko, Polska
 
