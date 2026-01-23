@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. Usuń .html z adresu URL (jeśli ktoś wpisze ręcznie .html, przekieruj go na wersję bez)
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R]
+
+# 2. Przekieruj żądanie bez rozszerzenia do pliku .html (jeśli plik .html istnieje)
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^ %{REQUEST_URI}.html [NC,L]
