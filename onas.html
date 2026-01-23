@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Poznaj EraLasera - zespół pasjonatów renowacji i nowoczesnej technologii czyszczenia laserowego.">
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta">
+
+    <title>EraLasera | O Nas</title>
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#dc2626', secondary: '#991b1b',
+                        'elegant-black': '#050505',
+                        'elegant-dark': '#0a0a0a',
+                        'elegant-card': '#141414',
+                        'nav-dark-start': '#0f0f0f',
+                        'nav-dark-end': '#1f0a0a'
+                    },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Metoda Potrójnego Tła (Fix overscroll) */
+        html {
+            scroll-behavior: auto;
+            scroll-padding-top: 95px;
+            height: 100%;
+            background-color: #ffffff; /* Light Mode overscroll */
+        }
+
+        /* Dark Mode overscroll */
+        html.dark {
+            background-color: #000000;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100%;
+            background-color: #ffffff; /* Fallback */
+        }
+
+        html.dark body {
+            background-color: #000000; /* Fallback dark */
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 5px; }
+        html.dark ::-webkit-scrollbar-track { background: #050505; }
+        html.dark ::-webkit-scrollbar-thumb { background: #7f1d1d; }
+
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* EFEKT FANCY LOGO */
+        html.dark .fancy-logo-filter {
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.95))
+                    drop-shadow(0 0 5px rgba(255,255,255,0.5))
+                    drop-shadow(0 0 15px rgba(255,255,255,0.3));
+        }
+    </style>
+</head>
+<body class="bg-gray-200 text-gray-800 dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-500
+             dark:bg-gradient-to-b dark:from-[#110202] dark:to-black
+             md:dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] md:dark:from-[#2a0505] md:dark:via-[#050000] md:dark:to-black md:dark:bg-fixed">
+
+    <nav class="bg-white dark:bg-black/40 dark:bg-gradient-to-b dark:from-black/80 dark:to-transparent
+                dark:backdrop-blur-xl shadow-md fixed w-full z-50 top-0 transition-all duration-500
+                border-b dark:border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="./" class="flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="EraLasera" class="h-48 w-auto object-contain transition transform group-hover:scale-105 fancy-logo-filter"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col leading-none\'><span class=\'text-3xl font-black tracking-tighter text-dark dark:text-white\'>ERA<span class=\'text-primary\'>LASERA</span></span></div>';">
+                    </a>
+                </div>
+                <div class="hidden lg:flex space-x-8 items-center">
+                    <a href="./" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Start</a>
+                    <a href="./#technologia" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Technologia</a>
+                    <a href="./#oferta" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Oferta</a>
+                    <a href="./#galeria" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Realizacje</a>
+
+                    <a href="onas" class="text-primary dark:text-primary border-b-2 border-primary font-semibold transition text-sm uppercase tracking-wide">O nas</a>
+
+                    <a href="galeria" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Galeria</a>
+                    <a href="https://www.facebook.com/ERALASERA" target="_blank" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition text-2xl"><i class="fa-brands fa-facebook"></i></a>
+
+                    <button id="theme-toggle" class="text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition focus:outline-none text-lg p-2 rounded-lg flex items-center gap-1 font-bold">
+                        <i class="fa-regular fa-sun"></i> / <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <a href="./#kontakt" class="bg-primary text-white px-6 py-2.5 rounded-full font-bold hover:bg-secondary transition shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2"><i class="fa-solid fa-phone"></i> Kontakt</a>
+                </div>
+                <div class="flex items-center lg:hidden gap-5">
+                    <a href="tel:602759526" class="text-primary text-xl animate-pulse flex items-center justify-center">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                    <button id="theme-toggle-mobile" class="text-gray-800 dark:text-white text-lg font-bold flex items-center gap-1">
+                        <i class="fa-regular fa-sun"></i>/<i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-800 dark:text-white focus:outline-none text-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-black/95 dark:backdrop-blur-xl border-t dark:border-white/10 absolute w-full left-0 shadow-2xl">
+            <div class="px-4 pt-4 pb-6 space-y-2 text-center">
+                <a href="./" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Start</a>
+                <a href="./#technologia" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Technologia</a>
+                <a href="./#oferta" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Oferta</a>
+                <a href="./#galeria" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Realizacje</a>
+
+                <a href="onas" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-primary dark:text-primary bg-red-50 dark:bg-white/10">O nas</a>
+
+                <a href="galeria" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Galeria</a>
+                <a href="https://www.facebook.com/ERALASERA" target="_blank" class="block px-3 py-3 text-blue-600 dark:text-blue-400 text-xl rounded-lg"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="./#kontakt" class="mobile-link mt-4 block w-full bg-primary text-white px-3 py-4 rounded-lg text-lg font-bold shadow-md">Skontaktuj się z nami</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-24 bg-white dark:bg-transparent transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center fade-in-up">
+                <div>
+                    <span class="text-primary font-bold uppercase tracking-widest text-sm mb-2 block">Historia i Pasja</span>
+                    <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
+                        Kim jesteśmy? <br><span class="text-primary">EraLasera</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        Jesteśmy zespołem pasjonatów, którzy łączą tradycyjne rzemiosło z nowoczesną technologią. Naszą misją jest ocalenie piękna starych przedmiotów, przywracając im pierwotny blask bezinwazyjną metodą laserową.
+                    </p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                        Każdy projekt to dla nas osobna historia. Podchodzimy do niej z pełnym zaangażowaniem, łącząc rzemieślniczą pasję z chirurgiczną precyzją wykonania.
+                    </p>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-primary/10 rounded-2xl transform rotate-3"></div>
+                    <img src="images/szyld.png" alt="Szyld EraLasera" class="relative rounded-2xl shadow-2xl w-full object-cover transform transition hover:scale-[1.02] duration-500"
+                         onerror="this.src='https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-24 bg-gray-200 dark:bg-transparent text-gray-900 dark:text-white relative transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16 items-start">
+                <div class="fade-in-up">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Skontaktuj się z nami</h2>
+                    <div class="w-16 h-1 bg-primary mb-8 rounded-full"></div>
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="ml-6"><h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Siedziba</h4><p class="text-lg text-gray-600 dark:text-gray-300">Kopiec 11<br>97-500 Radomsko, Polska</p></div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-phone"></i></div>
+                            <div class="ml-6"><h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Telefon</h4><p class="text-lg text-gray-600 dark:text-gray-300"><a href="tel:602759526" class="hover:text-primary transition font-bold">602 759 526</a></p></div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="ml-6">
+                                <h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Email</h4>
+                                <p class="text-lg text-gray-600 dark:text-gray-300">
+                                    <a href="mailto:eralasera2022@gmail.com" class="hover:text-primary transition">eralasera2022@gmail.com</a><br>
+                                    <a href="mailto:eralasera@op.pl" class="hover:text-primary transition">eralasera@op.pl</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in-up flex flex-col gap-4">
+                    <div class="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-gray-300 dark:border-white/10">
+                         <iframe src="https://maps.google.com/maps?q=Era+Lasera+Renowacje+żyrandoli+Kopiec+11+Radomsko&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/place/ERA+LASERA+Renowacje+%C5%BCyrandoli/@51.080453,19.444319,11008m/data=!3m1!1e3!4m6!3m5!1s0x4719ff5dc50f41b9:0x974a4e8338870c9b!8m2!3d51.080453!4d19.4443185!16s%2Fg%2F11tcv4wq42?hl=pl&entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="w-full bg-white hover:bg-gray-50 dark:bg-white/5 dark:hover:bg-white/10 text-gray-900 dark:text-white text-center py-4 rounded-xl font-bold transition flex items-center justify-center gap-2 border border-gray-300 dark:border-white/10 shadow-lg group">
+                        <i class="fa-solid fa-map-location-dot text-primary group-hover:scale-110 transition-transform"></i> Otwórz w Mapach Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black dark:bg-black py-12 border-t border-gray-900 dark:border-white/10 mt-auto relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <a href="https://www.grzywacztech.pl" target="_blank" class="group flex flex-col items-center md:items-start text-center md:text-left transition-transform hover:scale-105 duration-300">
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 group-hover:text-blue-400 transition-colors">Wykonawca Strony</span>
+                    <div class="flex flex-col items-center md:items-start leading-none">
+                        <span class="text-2xl font-extrabold tracking-tight text-white">Grzywacz<span class="text-blue-500">Tech</span></span>
+                        <span class="text-[0.6rem] text-blue-200/80 font-medium tracking-[0.2em] uppercase mt-1.5 group-hover:text-blue-200">Professional IT Solutions</span>
+                    </div>
+                </a>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="text-gray-500 text-sm leading-relaxed text-center md:text-left order-2 md:order-1">
+                        Profesjonalna renowacja.<br>
+                        © 2026 EraLasera.
+                    </div>
+                    <img src="images/logo.png" alt="EraLasera" class="h-48 w-auto object-contain order-1 md:order-2" style="filter: drop-shadow(0 0 2px rgba(255,255,255,0.95)) drop-shadow(0 0 5px rgba(255,255,255,0.5)) drop-shadow(0 0 15px rgba(255,255,255,0.3));">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- LOGIKA MOTYWU (DARK/LIGHT) + META THEME COLOR ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const themeMeta = document.getElementById('theme-color-meta');
+
+        function updateThemeColor() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeMeta.setAttribute('content', '#000000');
+            } else {
+                themeMeta.setAttribute('content', '#ffffff');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            updateThemeColor();
+        }
+
+        if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        if(themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+        updateThemeColor();
+
+        // --- MENU MOBILNE ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn) btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        // --- ANIMACJE FADE-IN NA SCROLL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        // --- SUWAKI PRZED/PO (dla zachowania spójności skryptów) ---
+        function initBeforeAfterSlider(slider) {
+            const beforeContainer = slider.querySelector('.ba-before-container');
+            const beforeImg = slider.querySelector('.ba-before-img');
+            const handle = slider.querySelector('.ba-handle');
+            const labelBefore = slider.querySelector('.ba-label-before');
+            const labelAfter = slider.querySelector('.ba-label-after');
+            let active = false, autoPlay = true, autoPlayDirection = 1, currentPos = 50;
+
+            function syncImageWidth() {
+                if(beforeImg && slider) {
+                    beforeImg.style.width = slider.offsetWidth + 'px';
+                }
+            }
+            syncImageWidth();
+            window.addEventListener('resize', syncImageWidth);
+
+            function setSliderPos(percentage) {
+                percentage = Math.max(0, Math.min(100, percentage));
+                currentPos = percentage;
+
+                beforeContainer.style.width = `${percentage}%`;
+                handle.style.left = `${percentage}%`;
+
+                if (labelBefore) labelBefore.style.opacity = percentage < 10 ? '0' : '1';
+                if (labelAfter) labelAfter.style.opacity = percentage > 90 ? '0' : '1';
+            }
+
+            function handleMove(e) {
+                if (window.innerWidth < 768) return;
+
+                if (!active) return;
+                if (autoPlay) autoPlay = false;
+                beforeContainer.style.transition = 'none';
+
+                let pageX = (e.touches && e.touches[0]) ? e.touches[0].pageX : e.pageX;
+                const sliderRect = slider.getBoundingClientRect();
+                let position = ((pageX - sliderRect.left) / sliderRect.width) * 100;
+
+                setSliderPos(position);
+            }
+
+            slider.addEventListener('mousedown', (e) => {
+                if (window.innerWidth < 768) return;
+                e.preventDefault(); active = true;
+            });
+            document.addEventListener('mouseup', () => active = false);
+            document.addEventListener('mousemove', handleMove);
+
+            slider.addEventListener('touchstart', (e) => {
+                if (window.innerWidth < 768) return;
+                active = true; handleMove(e);
+            }, { passive: true });
+            document.addEventListener('touchend', () => active = false);
+            document.addEventListener('touchmove', handleMove, { passive: true });
+
+            function animateAutoPlay() {
+                if (!autoPlay) return;
+                const speed = (window.innerWidth < 768) ? 0.3 : 0.1;
+
+                currentPos += speed * autoPlayDirection;
+                if (currentPos >= 100) autoPlayDirection = -1;
+                if (currentPos <= 0) autoPlayDirection = 1;
+
+                setSliderPos(currentPos);
+                requestAnimationFrame(animateAutoPlay);
+            }
+
+            const io = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && autoPlay) {
+                    animateAutoPlay();
+                    io.disconnect();
+                }
+            });
+            io.observe(slider);
+        }
+
+        document.querySelectorAll('.ba-slider').forEach(initBeforeAfterSlider);
+    </script>
+</body>
+</html>

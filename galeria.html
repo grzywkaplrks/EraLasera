@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galeria realizacji EraLasera. Zobacz zdjęcia przed i po czyszczeniu laserowym: silniki, cegła, zabytki, drewno.">
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta">
+
+    <title>EraLasera | Galeria Realizacji</title>
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#dc2626', secondary: '#991b1b',
+                        'elegant-black': '#050505',
+                        'elegant-dark': '#0a0a0a',
+                        'elegant-card': '#141414',
+                        'nav-dark-start': '#0f0f0f',
+                        'nav-dark-end': '#1f0a0a'
+                    },
+                    fontFamily: { sans: ['Montserrat', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Metoda Potrójnego Tła (Fix overscroll) */
+        html {
+            scroll-behavior: auto;
+            scroll-padding-top: 95px;
+            height: 100%;
+            background-color: #ffffff; /* Light Mode overscroll */
+        }
+
+        /* Dark Mode overscroll */
+        html.dark {
+            background-color: #000000;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100%;
+            background-color: #ffffff; /* Fallback */
+        }
+
+        html.dark body {
+            background-color: #000000; /* Fallback dark */
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 5px; }
+        html.dark ::-webkit-scrollbar-track { background: #050505; }
+        html.dark ::-webkit-scrollbar-thumb { background: #7f1d1d; }
+
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* MODYFIKACJA: Wyłączenie animacji CAŁKOWITE (dla PC i Mobile)
+           dla głównej sekcji realizacji (klasa .py-12).
+        */
+        section.py-12 .fade-in-up {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+
+        .photo-label {
+            position: absolute;
+            top: 15px;
+            font-family: 'Arial', sans-serif;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            border-radius: 6px;
+            pointer-events: none;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+            text-transform: uppercase;
+        }
+
+        /* EFEKT FANCY LOGO */
+        html.dark .fancy-logo-filter {
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.95))
+                    drop-shadow(0 0 5px rgba(255,255,255,0.5))
+                    drop-shadow(0 0 15px rgba(255,255,255,0.3));
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-500
+             dark:bg-gradient-to-b dark:from-[#110202] dark:to-black
+             md:dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] md:dark:from-[#2a0505] md:dark:via-[#050000] md:dark:to-black md:dark:bg-fixed">
+
+    <nav class="bg-white dark:bg-black/40 dark:bg-gradient-to-b dark:from-black/80 dark:to-transparent
+                dark:backdrop-blur-xl shadow-md fixed w-full z-50 top-0 transition-all duration-500
+                border-b dark:border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="./" class="flex items-center gap-2 group">
+                        <img src="images/logo.png" alt="EraLasera" class="h-48 w-auto object-contain transition transform group-hover:scale-105 fancy-logo-filter"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col leading-none\'><span class=\'text-3xl font-black tracking-tighter text-dark dark:text-white\'>ERA<span class=\'text-primary\'>LASERA</span></span></div>';">
+                    </a>
+                </div>
+                <div class="hidden lg:flex space-x-8 items-center">
+                    <a href="./" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Start</a>
+                    <a href="./#technologia" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Technologia</a>
+                    <a href="./#oferta" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Oferta</a>
+                    <a href="./#galeria" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">Realizacje</a>
+                    <a href="onas" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-semibold transition text-sm uppercase tracking-wide">O nas</a>
+
+                    <a href="galeria" class="text-primary dark:text-primary border-b-2 border-primary font-semibold transition text-sm uppercase tracking-wide">Galeria</a>
+
+                    <a href="https://www.facebook.com/ERALASERA" target="_blank" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition text-2xl"><i class="fa-brands fa-facebook"></i></a>
+
+                    <button id="theme-toggle" class="text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition focus:outline-none text-lg p-2 rounded-lg flex items-center gap-1 font-bold">
+                         <i class="fa-regular fa-sun"></i> / <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <a href="./#kontakt" class="bg-primary text-white px-6 py-2.5 rounded-full font-bold hover:bg-secondary transition shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2"><i class="fa-solid fa-phone"></i> Kontakt</a>
+                </div>
+                <div class="flex items-center lg:hidden gap-5">
+                    <a href="tel:602759526" class="text-primary text-xl animate-pulse flex items-center justify-center">
+                        <i class="fa-solid fa-phone"></i>
+                    </a>
+                    <button id="theme-toggle-mobile" class="text-gray-800 dark:text-white text-lg font-bold flex items-center gap-1">
+                        <i class="fa-regular fa-sun"></i>/<i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-800 dark:text-white focus:outline-none text-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-black/95 dark:backdrop-blur-xl border-t dark:border-white/10 absolute w-full left-0 shadow-2xl">
+            <div class="px-4 pt-4 pb-6 space-y-2 text-center">
+                <a href="./" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Start</a>
+                <a href="./#technologia" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Technologia</a>
+                <a href="./#oferta" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Oferta</a>
+                <a href="./#galeria" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">Realizacje</a>
+                <a href="onas" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary">O nas</a>
+
+                <a href="galeria" class="mobile-link block px-3 py-3 rounded-lg text-lg font-medium text-primary dark:text-primary bg-red-50 dark:bg-white/10">Galeria</a>
+
+                <a href="https://www.facebook.com/ERALASERA" target="_blank" class="block px-3 py-3 text-blue-600 dark:text-blue-400 text-xl rounded-lg"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="./#kontakt" class="mobile-link mt-4 block w-full bg-primary text-white px-3 py-4 rounded-lg text-lg font-bold shadow-md">Skontaktuj się z nami</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-40 pb-12 bg-white dark:bg-transparent text-center transition-colors duration-500">
+        <div class="fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">Nasze Realizacje</h1>
+            <div class="w-24 h-1.5 bg-primary mx-auto rounded-full"></div>
+            <p class="mt-4 text-gray-500 dark:text-gray-400 text-lg">Porównanie efektów naszej pracy.</p>
+            <p class="mt-2 text-gray-500 dark:text-gray-400 text-lg">Kliknij na zdjęcie, aby wyświetlić w pełnym rozmiarze</p>
+        </div>
+    </div>
+
+    <section class="py-12 flex-grow bg-white dark:bg-transparent transition-colors duration-500">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Krzyży i Monstrancji</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/3.png" onerror="this.src='https://images.unsplash.com/photo-1534068590799-09895a701d3e?q=80&w=800&auto=format&fit=crop'"
+                             alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/4.png" onerror="this.src='https://images.unsplash.com/photo-1534068590799-09895a701d3e?q=80&w=800&auto=format&fit=crop'"
+                             alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/27.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/28.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/29.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/30.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/31.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/32.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Dzwonków</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/1.png" onerror="this.src='https://images.unsplash.com/photo-1543615694-555e0964781b?q=80&w=800&auto=format&fit=crop'"
+                             alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/2.png" onerror="this.src='https://images.unsplash.com/photo-1543615694-555e0964781b?q=80&w=800&auto=format&fit=crop'"
+                             alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/23.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/24.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Chrzcielnic</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/17.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/18.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/19.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/20.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/21.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/22.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Żyrandoli</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/33.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/34.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/35.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/36.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/37.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/38.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/39.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/40.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/41.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/42.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Lamp</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/43.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/44.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Lichtarzy</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-12">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/45.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/46.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/47.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/48.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-up">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white tracking-wide">Renowacja Tabernakulów</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                        <span class="photo-label left-4">PRZED RENOWACJĄ</span>
+                        <img src="images/49.png" alt="Przed" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg group border border-transparent dark:border-white/10">
+                         <span class="photo-label left-4 md:right-4 md:left-auto">PO RENOWACJI</span>
+                        <img src="images/50.png" alt="Po" class="w-full h-auto object-cover aspect-[4/5] hover:scale-105 transition duration-700">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-32 mb-12 text-center fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">Więcej naszych realizacji po renowacji</h2>
+            <div class="w-24 h-1.5 bg-primary mx-auto rounded-full"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-up">
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/100.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/101.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/102.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/103.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/104.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/105.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/106.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/107.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/108.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/109.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/110.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/111.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/112.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/113.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/114.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+                <div class="gallery-item cursor-pointer relative rounded-lg overflow-hidden shadow-lg border border-transparent dark:border-white/10 group">
+                    <img src="images/115.png" class="w-full h-full object-cover aspect-[3/4] transition duration-500 group-hover:scale-110" alt="Realizacja">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white opacity-0 group-hover:opacity-100 text-2xl drop-shadow-md transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="py-24 bg-gray-200 dark:bg-transparent text-gray-900 dark:text-white relative transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16 items-start">
+                <div class="fade-in-up">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Skontaktuj się z nami</h2>
+                    <div class="w-16 h-1 bg-primary mb-8 rounded-full"></div>
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="ml-6"><h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Siedziba</h4><p class="text-lg text-gray-600 dark:text-gray-300">Kopiec 11<br>97-500 Radomsko, Polska</p></div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-phone"></i></div>
+                            <div class="ml-6"><h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Telefon</h4><p class="text-lg text-gray-600 dark:text-gray-300"><a href="tel:602759526" class="hover:text-primary transition font-bold">602 759 526</a></p></div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-14 h-14 bg-white dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-2xl flex-shrink-0 shadow-lg border border-transparent dark:border-white/10"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="ml-6">
+                                <h4 class="font-bold text-xl mb-1 text-gray-900 dark:text-white">Email</h4>
+                                <p class="text-lg text-gray-600 dark:text-gray-300">
+                                    <a href="mailto:eralasera2022@gmail.com" class="hover:text-primary transition">eralasera2022@gmail.com</a><br>
+                                    <a href="mailto:eralasera@op.pl" class="hover:text-primary transition">eralasera@op.pl</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in-up flex flex-col gap-4">
+                    <div class="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-gray-300 dark:border-white/10">
+                         <iframe src="https://maps.google.com/maps?q=Era+Lasera+Renowacje+żyrandoli+Kopiec+11+Radomsko&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/place/ERA+LASERA+Renowacje+%C5%BCyrandoli/@51.080453,19.444319,11008m/data=!3m1!1e3!4m6!3m5!1s0x4719ff5dc50f41b9:0x974a4e8338870c9b!8m2!3d51.080453!4d19.4443185!16s%2Fg%2F11tcv4wq42?hl=pl&entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="w-full bg-white hover:bg-gray-50 dark:bg-white/5 dark:hover:bg-white/10 text-gray-900 dark:text-white text-center py-4 rounded-xl font-bold transition flex items-center justify-center gap-2 border border-gray-300 dark:border-white/10 shadow-lg group">
+                        <i class="fa-solid fa-map-location-dot text-primary group-hover:scale-110 transition-transform"></i> Otwórz w Mapach Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black dark:bg-black py-12 border-t border-gray-900 dark:border-white/10 mt-auto relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <a href="https://www.grzywacztech.pl" target="_blank" class="group flex flex-col items-center md:items-start text-center md:text-left transition-transform hover:scale-105 duration-300">
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 group-hover:text-blue-400 transition-colors">Wykonawca Strony</span>
+                    <div class="flex flex-col items-center md:items-start leading-none">
+                        <span class="text-2xl font-extrabold tracking-tight text-white">Grzywacz<span class="text-blue-500">Tech</span></span>
+                        <span class="text-[0.6rem] text-blue-200/80 font-medium tracking-[0.2em] uppercase mt-1.5 group-hover:text-blue-200">Professional IT Solutions</span>
+                    </div>
+                </a>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="text-gray-500 text-sm leading-relaxed text-center md:text-left order-2 md:order-1">
+                        Profesjonalna renowacja.<br>
+                        © 2026 EraLasera.
+                    </div>
+                    <img src="images/logo.png" alt="EraLasera" class="h-48 w-auto object-contain order-1 md:order-2" style="filter: drop-shadow(0 0 2px rgba(255,255,255,0.95)) drop-shadow(0 0 5px rgba(255,255,255,0.5)) drop-shadow(0 0 15px rgba(255,255,255,0.3));">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const themeMeta = document.getElementById('theme-color-meta');
+
+        function updateThemeColor() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeMeta.setAttribute('content', '#000000');
+            } else {
+                themeMeta.setAttribute('content', '#ffffff');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            updateThemeColor();
+        }
+
+        if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        if(themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+        updateThemeColor();
+
+        const btn = document.getElementById('mobile-menu-btn'); const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        // LIGHTBOX
+        const lightbox = document.createElement('div');
+        lightbox.id = 'lightbox';
+        lightbox.className = 'fixed inset-0 z-[60] bg-black/90 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0';
+        lightbox.innerHTML = `
+            <button id="lightbox-close" class="absolute top-4 right-4 text-white text-5xl hover:text-primary transition focus:outline-none">×</button>
+            <img id="lightbox-img" src="" alt="Pełny ekran" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl transform scale-95 transition-transform duration-300 object-contain">
+        `;
+        document.body.appendChild(lightbox);
+
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+                lightboxImg.classList.remove('scale-95');
+                lightboxImg.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.remove('scale-100');
+            lightboxImg.classList.add('scale-95');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxImg.src = '';
+            }, 300);
+        }
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                if (img && img.src) {
+                    openLightbox(img.src);
+                }
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>
